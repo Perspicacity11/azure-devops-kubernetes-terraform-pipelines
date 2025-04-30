@@ -34,7 +34,11 @@ stages:
 
     - bash: echo DefaultWorkingDirectory:$(System.DefaultWorkingDirectory)
     - bash: ls -R $(Build.ArtifactStagingDirectory)
-
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 
   - job: SecondJob
     steps:
