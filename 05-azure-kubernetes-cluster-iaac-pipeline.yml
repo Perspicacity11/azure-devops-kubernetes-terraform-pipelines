@@ -13,11 +13,10 @@ steps:
   inputs:
     secureFile: 'azure_rsa.pub'
 
-- task: TerraformCLI@2
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
   inputs:
-    command: 'version'
-    allowTelemetryCollection: true
-
+    terraformVersion: '1.5.7'
+    
 - task: TerraformCLI@2
   displayName: 'terraform init'
   inputs:
