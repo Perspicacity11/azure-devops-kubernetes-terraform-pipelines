@@ -12,10 +12,11 @@ steps:
   name: publickey
   inputs:
     secureFile: 'azure_rsa.pub'
-    
-- task: TerraformInstaller@2
+
+- task: TerraformCLI@2
   inputs:
-    terraformVersion: 'latest'
+    command: 'version'
+    allowTelemetryCollection: true
 
 - task: TerraformCLI@2
   displayName: 'terraform init'
