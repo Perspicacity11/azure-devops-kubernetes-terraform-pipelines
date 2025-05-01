@@ -7,9 +7,9 @@ resources:
 pool:
   vmImage: ubuntu-latest
 
-# variables:
-#   tag: '$(Build.BuildId)'
-#   tag: 39
+variables:
+  # tag: '$(Build.BuildId)'
+  tag: 39
 
 stages:
 - stage: Build
@@ -25,36 +25,34 @@ stages:
     #     dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
     #     tags: |
     #       $(tag)
-
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
         Contents: '**/*.yaml'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'manifests'
         publishLocation: 'Container'
-    
+
 - stage: Deploy
   displayName: Configure Cluster
-  jobs:
-    - job: Deploy
-      displayName: Deploy
-      steps:
-      - task: DownloadPipelineArtifact@2
-        inputs:
-          buildType: 'current'
-          artifactName: 'manifests'
-          itemPattern: '**/*.yaml'
-          targetPath: '$(System.ArtifactsDirectory)'
-      - task: KubernetesManifest@1
-        inputs:
-          action: 'deploy'
-          connectionType: 'kubernetesServiceConnection'
-          kubernetesServiceConnection: 'aws-kubernetes-cluster-service-connection'
-          namespace: 'default'
-          manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
-          containers: cnaylor11/currency-exchange-devops:39
+  jobs: 
+  - job: Deploy
+    displayName: Deploy
+    steps: 
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'manifests'
+        itemPattern: '**/*.yaml'
+        targetPath: '$(System.ArtifactsDirectory)'
+    - task: KubernetesManifest@1
+      inputs:
+        action: 'deploy'
+        connectionType: 'kubernetesServiceConnection'
+        kubernetesServiceConnection: 'aws-kubernetes-cluster-service-connection'
+        namespace: 'default'
+        manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
+        containers: 'cnaylor11/currency-exchange-devops:$(tag)'
