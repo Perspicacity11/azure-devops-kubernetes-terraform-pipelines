@@ -7,9 +7,9 @@ resources:
 pool:
   vmImage: ubuntu-latest
 
-variables:
-  #tag: '$(Build.BuildId)'
-  tag: 39
+# variables:
+#   tag: '$(Build.BuildId)'
+#   tag: 39
 
 stages:
 - stage: Build
@@ -57,4 +57,4 @@ stages:
           kubernetesServiceConnection: 'aws-kubernetes-cluster-service-connection'
           namespace: 'default'
           manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
-          containers: cnaylor11/currency-exchange-devops:$(tag)
+          containers: cnaylor11/currency-exchange-devops:39
