@@ -54,12 +54,12 @@ stages:
         itemPattern: '**/*.yaml'
         targetPath: '$(System.ArtifactsDirectory)'
     
-    - task: KubernetesManifest@1
-      displayName: 
-      inputs:
-        action: 'deploy'
-        connectionType: 'kubernetesServiceConnection'
-        kubernetesServiceConnection: 'azure-kubernetes-connection'
-        namespace: 'default'
-        manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
-        containers: 'cnaylor11/currency-exchange-devops:$(tag)'
+    # - task: KubernetesManifest@1
+    #   displayName: 
+    #   inputs:
+    #     action: 'deploy'
+    #     connectionType: 'kubernetesServiceConnection'
+    #     kubernetesServiceConnection: 'azure-kubernetes-connection'
+    #     namespace: 'default'
+    #     manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
+    #     containers: 'cnaylor11/currency-exchange-devops:$(tag)'
