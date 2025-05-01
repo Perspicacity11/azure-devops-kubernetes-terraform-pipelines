@@ -8,8 +8,7 @@ resources:
 - repo: self
 
 variables:
-  tag: 21
-#  tag: '$(Build.BuildId)'
+  tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
@@ -20,13 +19,13 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    # - task: Docker@2
-    #   inputs:
-    #     containerRegistry: 'cnaylor11-docker-hub'
-    #     repository: 'cnaylor11/currency-exchange-devops'
-    #     command: 'buildAndPush'
-    #     Dockerfile: '**/Dockerfile'
-    #     tags: '$(tag)'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'cnaylor11-docker-hub'
+        repository: 'cnaylor11/currency-exchange-devops'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
 
     - task: CopyFiles@2
       inputs:
